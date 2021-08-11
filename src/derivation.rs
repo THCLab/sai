@@ -7,7 +7,7 @@ use sha3::{Sha3_256, Sha3_512};
 
 /// Self Addressing Derivations
 ///
-/// Self-addressing is a digest/hash of some data.
+/// Methods available to compute digest of data
 #[derive(Debug, PartialEq, Clone)]
 pub enum SelfAddressing {
     Blake3_256,
@@ -36,6 +36,7 @@ impl SelfAddressing {
         }
     }
 
+    /// Computes a digest of given data and construct `SelfAddressingPrefix`.
     pub fn derive(&self, data: &[u8]) -> SelfAddressingPrefix {
         SelfAddressingPrefix::new(self.to_owned(), self.digest(data))
     }

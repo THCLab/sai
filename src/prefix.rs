@@ -6,7 +6,9 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct SelfAddressingPrefix {
+    /// Hashing method
     pub derivation: SelfAddressing,
+    /// Hashing result
     pub digest: Vec<u8>,
 }
 
