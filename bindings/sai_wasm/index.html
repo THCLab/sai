@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>wasm example</title>
+  </head>
+  <body>
+    <script type="module">
+      import init, {verify, derive, Derivation} from "./pkg/sai_wasm.js";
+      init()
+        .then(() => {
+          let der = Derivation.SHA2_256;
+          let sai = derive(Derivation.SHA2_256, "data")
+          alert(sai)
+          alert(verify(sai, "data"))
+        });
+      </script>
+  </body>
+</html>
