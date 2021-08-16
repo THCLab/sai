@@ -7,6 +7,6 @@ LIB_NAME="sai_python"
 cd $BASE_DIR
 cargo build --release
 
-mkdir -p "$BASE_DIR/ffi/python/libs/"
+mkdir -p "$BASE_DIR/python/libs/"
 
 cp $BASE_DIR"/target/release/lib${LIB_NAME}.so" "$BASE_DIR/python/libs/lib${LIB_NAME}.so"
