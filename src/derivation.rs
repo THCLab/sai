@@ -1,5 +1,5 @@
 use crate::{error::Error, prefix::SelfAddressingPrefix};
-use blake2::{Blake2b, Digest, VarBlake2b, VarBlake2s};
+use blake2::{Blake2b, Blake2s, Digest, VarBlake2b, VarBlake2s};
 use blake3;
 use core::str::FromStr;
 use sha2::{Sha256, Sha512};
@@ -108,7 +108,7 @@ fn blake3_256_digest(input: &[u8]) -> Vec<u8> {
 
 fn blake2s_256_digest(input: &[u8], key: &[u8]) -> Vec<u8> {
     use blake2::digest::{Update, VariableOutput};
-    let mut hasher = VarBlake2s::new_keyed(key, 256);
+    let mut hasher = VarBlake2s::new_keyed(key, 32);
     hasher.update(input);
     hasher.finalize_boxed().to_vec()
 }
@@ -117,7 +117,7 @@ fn blake2s_256_digest(input: &[u8], key: &[u8]) -> Vec<u8> {
 // TODO updated -> is this the one?
 fn blake2b_256_digest(input: &[u8], key: &[u8]) -> Vec<u8> {
     use blake2::digest::{Update, VariableOutput};
-    let mut hasher = VarBlake2b::new_keyed(key, 256);
+    let mut hasher = VarBlake2b::new_keyed(key, 32);
     hasher.update(input);
     hasher.finalize_boxed().to_vec()
 }
