@@ -1,5 +1,5 @@
 # sai_wasm
-### Prerequisites 
+### Prerequisites
 `cargo install wasm-pack`
 
 ### Run
