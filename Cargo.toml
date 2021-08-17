@@ -1,7 +1,8 @@
 [package]
 name = "said"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2018"
+authors = ["Human Colossus"]
 description = "Self-Addressing identifier library"
 documentation = "https://github.com/thclab/sai"
 homepage = "https://github.com/thclab/sai"
