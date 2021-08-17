@@ -1,7 +1,15 @@
 [package]
-name = "sai"
+name = "said"
 version = "0.1.0"
 edition = "2018"
+description = "Self-Addressing identifier library"
+documentation = "https://github.com/thclab/sai"
+homepage = "https://github.com/thclab/sai"
+repository = "https://github.com/thclab/sai"
+license = "Apache-2.0"
+keywords = ["keri", "SAI", "identifier"]
+categories = ["cryptography"]
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

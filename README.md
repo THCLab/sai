@@ -1,13 +1,13 @@
-# sai
+# Self-Addressing Identifier
 
-sai provides a compact text representation of digests of data. 
+Self-Addressing Identifier (SAI) provides a compact text representation of digests of data.
 It supports multiple hash algorithms.
 
-Self Adressing Identifeir is base64 encoded hash of data, prepended with
+Self Addressing Identifier is base64 encoded hash of data, prepended with
 one or two letter prefix, called derivation code. Derivation code determines
 which hash algorithm was used to derive the digest.
 
-| deivation code| digest type 		| code lenngth 	| identifier length	|
+| derivation code| digest type 		| code length 	| identifier length	|
 |---------------|-------------------|---------------|-------------------|
 | E				| Blake3-256 Digest | 1				| 44 				|
 | F 			| Blake2b-256 Digest| 1				| 44				|
@@ -23,7 +23,7 @@ which hash algorithm was used to derive the digest.
 
 To derive Self Addressing Identifier, `SelfAddressing` enum can be used. It
 determines hashing algorithm used for Identifier derivation.  Here are its
-possible values: 
+possible values:
 
 ```rust
 pub enum SelfAddressing {
@@ -39,7 +39,7 @@ pub enum SelfAddressing {
 }
 ```
 
-`verify_bindings` function checks if provided data matches digest encoded in Self Adressing Identifier.
+`verify_bindings` function checks if provided data matches digest encoded in Self Addressing Identifier.
 
 ### Example
 ```rust
