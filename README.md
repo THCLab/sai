@@ -53,3 +53,11 @@ assert!(!sai.verify_binding("wrong data".as_bytes()));
 
 ## wasm
 `bindings/sai_wasm` directory contains a project which allows to compile sai library to wasm.
+
+## Releasing new version
+[cargo-release](https://github.com/crate-ci/cargo-release) is required
+
+To release new version run `cargo release`
+
+Due to [release config](./release.toml) it will bump version, create new git tag
+and push it to remote.
