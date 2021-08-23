@@ -1,4 +1,4 @@
-use sai::derivation::SelfAddressing;
+use said::derivation::SelfAddressing;
 
 #[test]
 fn test_derive() {

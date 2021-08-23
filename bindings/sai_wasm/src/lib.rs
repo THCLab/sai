@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-use sai::{derivation::SelfAddressing, prefix::SelfAddressingPrefix};
+use said::{derivation::SelfAddressing, prefix::SelfAddressingPrefix};
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
