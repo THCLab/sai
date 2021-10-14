@@ -41,7 +41,6 @@ impl SelfAddressing {
         SelfAddressingPrefix::new(self.to_owned(), self.digest(data))
     }
 
-
     pub fn to_str(&self) -> String {
         match self {
             Self::Blake3_256 => "E",
