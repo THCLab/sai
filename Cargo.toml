@@ -25,3 +25,4 @@ sha3 = "0.9.1"
 base64 = "0.12"
 serde = { version = "1.0" }
 thiserror = "1.0"
+clap = "3.0.0-beta.4"

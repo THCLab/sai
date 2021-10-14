@@ -24,7 +24,7 @@ impl SelfAddressingPrefix {
         self.derivation.digest(sed) == self.digest
     }
 
-    fn to_str(&self) -> String {
+    pub fn to_str(&self) -> String {
         // empty data cannot be prefixed!
         match self.digest.len() {
             0 => "".to_string(),
@@ -35,7 +35,7 @@ impl SelfAddressingPrefix {
             .join(""),
         }
     }
-    
+
     pub fn derivative(&self) -> Vec<u8> {
         self.digest.to_owned()
     }
@@ -68,7 +68,6 @@ impl FromStr for SelfAddressingPrefix {
 impl fmt::Display for SelfAddressingPrefix {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.to_str())
-    
     }
 }
 
