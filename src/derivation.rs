@@ -1,5 +1,5 @@
 use crate::{error::Error, prefix::SelfAddressingPrefix};
-use blake2::{Blake2b, Blake2s, Digest, VarBlake2b, VarBlake2s};
+use blake2::{Blake2b, Digest, VarBlake2b, VarBlake2s};
 use blake3;
 use core::str::FromStr;
 use sha2::{Sha256, Sha512};
@@ -8,7 +8,7 @@ use sha3::{Sha3_256, Sha3_512};
 /// Self Addressing Derivations
 ///
 /// Methods available to compute digest of data
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub enum SelfAddressing {
     Blake3_256,
     Blake2B256(Vec<u8>),
@@ -25,8 +25,8 @@ impl SelfAddressing {
     pub fn digest(&self, data: &[u8]) -> Vec<u8> {
         match self {
             Self::Blake3_256 => blake3_256_digest(data),
-            Self::Blake2B256(key) => blake2b_256_digest(data, &key),
-            Self::Blake2S256(key) => blake2s_256_digest(data, &key),
+            Self::Blake2B256(key) => blake2b_256_digest(data, key),
+            Self::Blake2S256(key) => blake2s_256_digest(data, key),
             Self::SHA3_256 => sha3_256_digest(data),
             Self::SHA2_256 => sha2_256_digest(data),
             Self::Blake3_512 => blake3_512_digest(data),

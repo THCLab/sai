@@ -3,7 +3,7 @@ use crate::{derivation::SelfAddressing, error::Error};
 use core::{fmt, str::FromStr};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub struct SelfAddressingPrefix {
     /// Hashing method
     pub derivation: SelfAddressing,
@@ -54,9 +54,9 @@ impl FromStr for SelfAddressingPrefix {
         let prefix_b64_len = code.code_len() + code.derivative_b64_len();
         let c_len = code.code_len();
         if s.len() == prefix_b64_len {
-            let decoded = from_text_to_bytes(&s[c_len..].as_bytes())?[c_len..].to_vec();
+            let decoded = from_text_to_bytes(s[c_len..].as_bytes())?[c_len..].to_vec();
 
-            Ok(Self::new(code.into(), decoded))
+            Ok(Self::new(code, decoded))
         } else {
             Err(Error::DeserializationError(format!(
                 "Incorrect Prefix Length: {}",
@@ -114,7 +114,7 @@ pub fn from_bytes_to_text(bytes: &[u8]) -> String {
     let lead_size = (3 - (bytes.len() % 3)) % 3;
     let full_derivative: Vec<_> = std::iter::repeat(0)
         .take(lead_size)
-        .chain(bytes.to_vec().into_iter())
+        .chain(bytes.iter().copied())
         .collect();
 
     base64::encode_config(full_derivative, base64::URL_SAFE)

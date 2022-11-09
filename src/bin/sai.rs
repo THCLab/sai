@@ -60,14 +60,14 @@ Supported codes:
         )
         .get_matches();
 
-    if let Some(ref matches) = matches.subcommand_matches("gen") {
+    if let Some(matches) = matches.subcommand_matches("gen") {
         let data = matches.value_of("data").unwrap().as_bytes();
         let prefix_code = matches.value_of("type").unwrap();
         let sai = SelfAddressing::from_str(prefix_code).unwrap();
         let calculated_sai = sai.derive(data).to_str();
         println!("{}", calculated_sai);
     }
-    if let Some(ref matches) = matches.subcommand_matches("verify") {
+    if let Some(matches) = matches.subcommand_matches("verify") {
         let data = matches.value_of("data").unwrap().as_bytes();
         let sai = matches.value_of("sai").unwrap();
         let prefix = SelfAddressing::from_str(sai).unwrap();
