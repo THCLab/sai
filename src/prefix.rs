@@ -1,6 +1,5 @@
 use crate::{derivation::SelfAddressing, error::Error};
 
-use base64::{decode_config, encode_config};
 use core::{fmt, str::FromStr};
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
@@ -28,11 +27,14 @@ impl SelfAddressingPrefix {
         // empty data cannot be prefixed!
         match self.digest.len() {
             0 => "".to_string(),
-            _ => [
-                self.derivation_code(),
-                encode_config(&self.digest, base64::URL_SAFE_NO_PAD),
-            ]
-            .join(""),
+            _ => {
+                let dc = self.derivation_code();
+                let lead_bytes = if dc.len() % 4 != 0 { dc.len() } else { 0 };
+                // replace lead bytes with code
+                let derivative_text =
+                    from_bytes_to_text(&self.derivative())[lead_bytes..].to_string();
+                [dc, derivative_text].join("")
+            }
         }
     }
 
@@ -52,10 +54,9 @@ impl FromStr for SelfAddressingPrefix {
         let prefix_b64_len = code.code_len() + code.derivative_b64_len();
         let c_len = code.code_len();
         if s.len() == prefix_b64_len {
-            Ok(Self::new(
-                code,
-                decode_config(&s[c_len..prefix_b64_len], base64::URL_SAFE)?,
-            ))
+            let decoded = from_text_to_bytes(&s[c_len..].as_bytes())?[c_len..].to_vec();
+
+            Ok(Self::new(code.into(), decoded))
         } else {
             Err(Error::DeserializationError(format!(
                 "Incorrect Prefix Length: {}",
@@ -100,4 +101,21 @@ impl Default for SelfAddressingPrefix {
             digest: vec![],
         }
     }
+}
+
+pub fn from_text_to_bytes(text: &[u8]) -> Result<Vec<u8>, Error> {
+    let lead_size = (4 - (text.len() % 4)) % 4;
+    let full_derivative = ["A".repeat(lead_size).as_bytes(), text].concat();
+
+    Ok(base64::decode_config(full_derivative, base64::URL_SAFE)?.to_vec())
+}
+
+pub fn from_bytes_to_text(bytes: &[u8]) -> String {
+    let lead_size = (3 - (bytes.len() % 3)) % 3;
+    let full_derivative: Vec<_> = std::iter::repeat(0)
+        .take(lead_size)
+        .chain(bytes.to_vec().into_iter())
+        .collect();
+
+    base64::encode_config(full_derivative, base64::URL_SAFE)
 }

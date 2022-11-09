@@ -16,14 +16,14 @@ fn main() {
                         .long("data")
                         .required(true)
                         .takes_value(true)
-                        .about("Source data against which we would like toverify given digest"),
+                        .help("Source data against which we would like toverify given digest"),
                 )
                 .arg(
                     Arg::new("type")
                         .short('t')
                         .long("type")
                         .takes_value(true)
-                        .about(
+                        .help(
                             "Derevation code for the digest, algorithm used for digest.
 Supported codes:
    E - Blake3_256
@@ -47,7 +47,7 @@ Supported codes:
                         .long("sai")
                         .takes_value(true)
                         .required(true)
-                        .about("Digest against which we would like to verify the content"),
+                        .help("Digest against which we would like to verify the content"),
                 )
                 .arg(
                     Arg::new("data")
@@ -55,7 +55,7 @@ Supported codes:
                         .long("data")
                         .takes_value(true)
                         .required(true)
-                        .about("Source data against which we would like toverify given digest"),
+                        .help("Source data against which we would like toverify given digest"),
                 ),
         )
         .get_matches();
