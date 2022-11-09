@@ -1,6 +1,6 @@
 [package]
 name = "self-addressing-identifier"
-version = "0.1.2"
+version = "0.2.0"
 edition = "2018"
 authors = ["Human Colossus"]
 description = "Self-Addressing identifier library"
