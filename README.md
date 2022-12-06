@@ -19,6 +19,12 @@ which hash algorithm was used to derive the digest.
 | 0F			| SHA3-512 Digest 	| 2				| 88				|
 | 0G			| SHA2-512 Digest	| 2				| 88				|
 
+## License
+
+EUPL 1.2 
+
+We have distilled the most crucial license specifics to make your adoption seamless: [see here for details](https://github.com/THCLab/licensing).
+
 ## Usage
 
 To derive Self Addressing Identifier, `SelfAddressing` enum can be used. It
