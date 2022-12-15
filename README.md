@@ -1,5 +1,7 @@
 # Self-Addressing Identifier
 
+A Rust implementation of the [IETF Draft SAID specification](https://weboftrust.github.io/ietf-said/draft-ssmith-said.html).
+
 Self-Addressing Identifier (SAI) provides a compact text representation of digests of data.
 It supports multiple hash algorithms.
 
