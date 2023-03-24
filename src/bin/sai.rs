@@ -23,6 +23,7 @@ fn main() {
                         .short('t')
                         .long("type")
                         .takes_value(true)
+                        .required(true)
                         .help(
                             "Derevation code for the digest, algorithm used for digest.
 Supported codes:
