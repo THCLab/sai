@@ -1,3 +1,6 @@
+# Moved into https://github.com/THCLab/cesrox/tree/master/sai
+
+
 # Self-Addressing Identifier
 
 A Rust implementation of the [IETF Draft SAID specification](https://weboftrust.github.io/ietf-said/draft-ssmith-said.html).
