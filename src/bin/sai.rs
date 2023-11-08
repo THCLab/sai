@@ -2,7 +2,7 @@ const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
 use clap::{App, Arg};
 use said::derivation::SelfAddressing;
-use std::str::FromStr;
+use std::{fs, str::FromStr};
 
 fn main() {
     let matches = App::new("SAI")
@@ -14,15 +14,25 @@ fn main() {
                     Arg::new("data")
                         .short('d')
                         .long("data")
-                        .required(true)
                         .takes_value(true)
-                        .help("Source data against which we would like toverify given digest"),
+                        .required_unless_present("file")
+                        .help("Source data against which we would like to calculate digest"),
+                )
+                .arg(
+                    Arg::new("file")
+                        .short('f')
+                        .long("file")
+                        .required_unless_present("data")
+                        .takes_value(true)
+                        .help(
+                            "File from which we would like to read data against which we would like to calculate digest"),
                 )
                 .arg(
                     Arg::new("type")
                         .short('t')
                         .long("type")
                         .takes_value(true)
+                        .required(true)
                         .help(
                             "Derevation code for the digest, algorithm used for digest.
 Supported codes:
@@ -55,16 +65,27 @@ Supported codes:
                         .long("data")
                         .takes_value(true)
                         .required(true)
-                        .help("Source data against which we would like toverify given digest"),
+                        .help("Source data against which we would like to verify given digest"),
                 ),
         )
         .get_matches();
 
     if let Some(matches) = matches.subcommand_matches("gen") {
-        let data = matches.value_of("data").unwrap().as_bytes();
+        let mut data = Vec::new();
+
+        if matches.contains_id("data") {
+            data.extend_from_slice(matches.value_of("data").unwrap().as_bytes());
+        }
+
+        if matches.contains_id("file") {
+            let file_path = matches.value_of("file").unwrap();
+            let file_data =
+                fs::read_to_string(file_path).expect("Something went wrong reading the file");
+            data.extend_from_slice(file_data.as_bytes())
+        }
         let prefix_code = matches.value_of("type").unwrap();
         let sai = SelfAddressing::from_str(prefix_code).unwrap();
-        let calculated_sai = sai.derive(data).to_str();
+        let calculated_sai = sai.derive(&data).to_str();
         println!("{}", calculated_sai);
     }
     if let Some(matches) = matches.subcommand_matches("verify") {
